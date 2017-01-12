@@ -8,7 +8,6 @@
 
 #import "MulChooseCollectView.h"
 #import "CollectviewChooseCell.h"
-#import "HeaderView.h"
 #define ItemHeight 70
 #define HeaderHeight 50
 #define CellId @"CellId"
@@ -45,7 +44,7 @@ static NSString *HeaderId = @"HeaderId";
     flowLayout.minimumLineSpacing = 0;
     _MyCollectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0 ,SCREEN_WIDTH, self.frame.size.height) collectionViewLayout:flowLayout];
     _MyCollectView.backgroundColor = ColorRGB(0xf7f7f7);
-    [_MyCollectView registerClass:[HeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader  withReuseIdentifier:HeaderId];
+    [_MyCollectView registerClass:[UICollectionReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader  withReuseIdentifier:HeaderId];
     _MyCollectView.showsVerticalScrollIndicator = NO;
     _MyCollectView.scrollEnabled = YES;
     _MyCollectView.delegate = self;
@@ -54,22 +53,6 @@ static NSString *HeaderId = @"HeaderId";
 }
 
 
--(void)ChooseAllClick:(UIButton *)button{
-    _ifAllSelecteSwitch = YES;
-    UIButton * chooseIcon = (UIButton *)[reusableview viewWithTag:10];
-    [chooseIcon setSelected:!_ifAllSelected];
-    _ifAllSelected = !_ifAllSelected;
-    if (_ifAllSelected) {
-        [_choosedArr removeAllObjects];
-        [_choosedArr addObjectsFromArray:_dataArr];
-    }
-    else{
-        [_choosedArr removeAllObjects];
-    }
-    [_MyCollectView reloadData];
-    _block(@"All",_choosedArr);
-    
-}
 
 #pragma mark --CollectionViewDelegate
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -100,10 +83,8 @@ static NSString *HeaderId = @"HeaderId";
                 make.width.mas_equalTo(50);
             }];
             
-            UIButton * chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-            chooseBtn.frame = CGRectMake(0, 0, reusableview.frame.size.width, reusableview.frame.size.height);
-            [chooseBtn addTarget:self action:@selector(ChooseAllClick:) forControlEvents:UIControlEventTouchUpInside];
-            [reusableview addSubview:chooseBtn];
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ChooseAllClick:)];
+            [reusableview addGestureRecognizer:tap];
 
         }
     }
@@ -171,6 +152,26 @@ static NSString *HeaderId = @"HeaderId";
     [self.MyCollectView reloadData];
 }
 
+
+/**
+ 全选
+ */
+-(void)ChooseAllClick:(UITapGestureRecognizer *)tapGes{
+    _ifAllSelecteSwitch = YES;
+    UIButton * chooseIcon = (UIButton *)[reusableview viewWithTag:10];
+    [chooseIcon setSelected:!_ifAllSelected];
+    _ifAllSelected = !_ifAllSelected;
+    if (_ifAllSelected) {
+        [_choosedArr removeAllObjects];
+        [_choosedArr addObjectsFromArray:_dataArr];
+    }
+    else{
+        [_choosedArr removeAllObjects];
+    }
+    [_MyCollectView reloadData];
+    _block(@"All",_choosedArr);
+    
+}
 
 
 @end

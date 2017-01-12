@@ -17,7 +17,6 @@
 		F934CC341D34DE4B001F9A92 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F934CC321D34DE4B001F9A92 /* LaunchScreen.storyboard */; };
 		F9DD10CF1D372856004DADCD /* TableVC_MulChoose.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD10CE1D372856004DADCD /* TableVC_MulChoose.m */; };
 		F9DD10FC1D3732BD004DADCD /* CollectviewChooseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD10D31D3732BD004DADCD /* CollectviewChooseCell.m */; };
-		F9DD10FD1D3732BD004DADCD /* HeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD10D51D3732BD004DADCD /* HeaderView.m */; };
 		F9DD10FE1D3732BD004DADCD /* MulChooseCollectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD10D71D3732BD004DADCD /* MulChooseCollectView.m */; };
 		F9DD10FF1D3732BD004DADCD /* SingleChooseCollectview.m in Sources */ = {isa = PBXBuildFile; fileRef = F9DD10D91D3732BD004DADCD /* SingleChooseCollectview.m */; };
 		F9DD11001D3732BD004DADCD /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F9DD10DB1D3732BD004DADCD /* Info.plist */; };
@@ -57,8 +56,6 @@
 		F9DD10CE1D372856004DADCD /* TableVC_MulChoose.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableVC_MulChoose.m; sourceTree = "<group>"; };
 		F9DD10D21D3732BD004DADCD /* CollectviewChooseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectviewChooseCell.h; sourceTree = "<group>"; };
 		F9DD10D31D3732BD004DADCD /* CollectviewChooseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectviewChooseCell.m; sourceTree = "<group>"; };
-		F9DD10D41D3732BD004DADCD /* HeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HeaderView.h; sourceTree = "<group>"; };
-		F9DD10D51D3732BD004DADCD /* HeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HeaderView.m; sourceTree = "<group>"; };
 		F9DD10D61D3732BD004DADCD /* MulChooseCollectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MulChooseCollectView.h; sourceTree = "<group>"; };
 		F9DD10D71D3732BD004DADCD /* MulChooseCollectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MulChooseCollectView.m; sourceTree = "<group>"; };
 		F9DD10D81D3732BD004DADCD /* SingleChooseCollectview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleChooseCollectview.h; sourceTree = "<group>"; };
@@ -191,8 +188,6 @@
 			children = (
 				F9DD10D21D3732BD004DADCD /* CollectviewChooseCell.h */,
 				F9DD10D31D3732BD004DADCD /* CollectviewChooseCell.m */,
-				F9DD10D41D3732BD004DADCD /* HeaderView.h */,
-				F9DD10D51D3732BD004DADCD /* HeaderView.m */,
 				F9DD10D61D3732BD004DADCD /* MulChooseCollectView.h */,
 				F9DD10D71D3732BD004DADCD /* MulChooseCollectView.m */,
 				F9DD10D81D3732BD004DADCD /* SingleChooseCollectview.h */,
@@ -321,7 +316,6 @@
 			files = (
 				F9DD110B1D3732BD004DADCD /* MulChooseTable.m in Sources */,
 				AEAB00521D36870000FB23DD /* CollectViewVC_SingleChoose.m in Sources */,
-				F9DD10FD1D3732BD004DADCD /* HeaderView.m in Sources */,
 				F9EB3CCD1D3644EC0045DB59 /* CollectViewVC_Mulchoose.m in Sources */,
 				F934CC2C1D34DE4B001F9A92 /* ViewController.m in Sources */,
 				F9DD11011D3732BD004DADCD /* MASCompositeConstraint.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 typedef void(^ChooseBlock) (NSString *chooseContent,NSMutableArray *chooseArr);
-@interface MulChooseTable : UIView<UITableViewDataSource,UITableViewDelegate>
+@interface MulChooseTable : UIView<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property(nonatomic,strong)UITableView * MyTable;
 @property(nonatomic,strong)NSMutableArray * dataArr;
 @property(nonatomic,strong)NSMutableArray * choosedArr;

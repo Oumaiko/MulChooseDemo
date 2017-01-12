@@ -39,21 +39,13 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 }
 
 -(void)MakeView{
-    self.titleLabel = [[UILabel alloc]init];
-    self.titleLabel.textColor = [UIColor darkTextColor];
-    self.titleLabel.font = [UIFont systemFontOfSize:16];
-    self.titleLabel.textAlignment = NSTextAlignmentLeft;
     [self.contentView addSubview:self.titleLabel];
+    [self.contentView addSubview:self.SelectIconBtn];
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.contentView.mas_left).offset(15);
         make.top.equalTo(self.contentView.mas_top);
         make.height.equalTo(self.contentView.mas_height);
     }];
-    self.SelectIconBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [self.SelectIconBtn setImage:[UIImage imageNamed:@"table_UnSelect"] forState:UIControlStateNormal];
-    [self.SelectIconBtn setImage:[UIImage imageNamed:@"table_Selected"] forState:UIControlStateSelected];
-    self.SelectIconBtn.userInteractionEnabled = NO;
-    [self.contentView addSubview:self.SelectIconBtn];
     [self.SelectIconBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(self.titleLabel.mas_right).offset(10);
         make.right.equalTo(self.contentView.mas_right).offset(-15);
@@ -61,6 +53,26 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
         make.width.mas_equalTo(50);
         make.height.mas_equalTo(self.contentView.mas_height);
     }];
+}
+
+-(UILabel *)titleLabel{
+    if (!_titleLabel) {
+        _titleLabel = [[UILabel alloc]init];
+        _titleLabel.textColor = [UIColor darkTextColor];
+        _titleLabel.font = [UIFont systemFontOfSize:16];
+        _titleLabel.textAlignment = NSTextAlignmentLeft;
+    }
+    return _titleLabel;
+}
+
+-(UIButton *)SelectIconBtn{
+    if (!_SelectIconBtn) {
+        _SelectIconBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_SelectIconBtn setImage:[UIImage imageNamed:@"table_UnSelect"] forState:UIControlStateNormal];
+        [_SelectIconBtn setImage:[UIImage imageNamed:@"table_Selected"] forState:UIControlStateSelected];
+        _SelectIconBtn.userInteractionEnabled = NO;
+    }
+    return _SelectIconBtn;
 }
 
 
@@ -71,8 +83,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
-//    self.SelectIconBtn.selected = !self.SelectIconBtn.selected;
-
 }
 
 @end

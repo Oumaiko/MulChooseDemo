@@ -11,8 +11,13 @@
 #define HeaderHeight 50
 #define CellHeight 50
 
+@interface MulChooseTable()
+@property(nonatomic,assign)BOOL ifhHaveHeader;
+@end
 
-@implementation MulChooseTable
+@implementation MulChooseTable{
+    UIView *headerView;
+}
 
 +(MulChooseTable *)ShareTableWithFrame:(CGRect)frame HeaderTitle:(NSString *)title{
    MulChooseTable * shareInstance = [[MulChooseTable alloc] initWithFrame:frame HaveHeader:YES HeaderTitle:title];
@@ -33,14 +38,14 @@
     if(self){
         self.frame = frame;
         [self CreateTable];
-        if(ifhHave){
-            UIView * view = [self CreateHeaderView_HeaderTitle:title];
-            _MyTable.tableHeaderView = view;
-        }
+        _ifhHaveHeader = ifhHave;
     }
     return self;
 }
 
+/**
+ 创建TableView
+ */
 -(void)CreateTable{
     _choosedArr = [[NSMutableArray alloc]initWithCapacity:0];
     _MyTable = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.frame.size.height)];
@@ -50,56 +55,63 @@
     [self addSubview:_MyTable];
 }
 
+/**
+ 创建Header
+ */
 -(UIView *)CreateHeaderView_HeaderTitle:(NSString *)title{
-    UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HeaderHeight)];
-    UILabel * HeaderTitleLab = [[UILabel alloc]init];
-    HeaderTitleLab.text = title;
-    [headerView addSubview:HeaderTitleLab];
-    [HeaderTitleLab mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(headerView.mas_left).offset(15);
-        make.top.equalTo(headerView.mas_top).offset(0);
-        make.height.mas_equalTo(headerView.mas_height);
-    }];
-    UIButton *chooseIcon = [UIButton buttonWithType:UIButtonTypeCustom];
-    chooseIcon.tag = 10;
-    [chooseIcon setImage:[UIImage imageNamed:@"table_UnSelect"] forState:UIControlStateNormal];
-    [chooseIcon setImage:[UIImage imageNamed:@"table_Selected"] forState:UIControlStateSelected];
-    chooseIcon.userInteractionEnabled = NO;
-    [headerView addSubview:chooseIcon];
-    [chooseIcon mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.left.equalTo(HeaderTitleLab.mas_right).offset(10);
-        make.right.equalTo(headerView.mas_right).offset(-15);
-        make.top.equalTo(headerView.mas_top);
-        make.height.mas_equalTo(headerView.mas_height);
-        make.width.mas_equalTo(50);
-    }];
-    
-    UIButton * chooseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    chooseBtn.frame = CGRectMake(0, 0, headerView.frame.size.width, headerView.frame.size.height);
-    [chooseBtn addTarget:self action:@selector(ChooseAllClick:) forControlEvents:UIControlEventTouchUpInside];
-    [headerView addSubview:chooseBtn];
+    if (!headerView) {
+        headerView = [[UICollectionReusableView alloc]initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, HeaderHeight)];
+        headerView.backgroundColor = [UIColor whiteColor];
+        UILabel * HeaderTitleLab = [[UILabel alloc]init];
+        HeaderTitleLab.text = title;
+        [headerView addSubview:HeaderTitleLab];
+        [HeaderTitleLab mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(headerView.mas_left).offset(15);
+            make.top.equalTo(headerView.mas_top).offset(0);
+            make.height.mas_equalTo(headerView.mas_height);
+        }];
+        UIButton *chooseIcon = [UIButton buttonWithType:UIButtonTypeCustom];
+        chooseIcon.tag = 10;
+        [chooseIcon setImage:[UIImage imageNamed:@"table_UnSelect"] forState:UIControlStateNormal];
+        [chooseIcon setImage:[UIImage imageNamed:@"table_Selected"] forState:UIControlStateSelected];
+        chooseIcon.userInteractionEnabled = NO;
+        [headerView addSubview:chooseIcon];
+        [chooseIcon mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(HeaderTitleLab.mas_right).offset(10);
+            make.right.equalTo(headerView.mas_right).offset(-15);
+            make.top.equalTo(headerView.mas_top);
+            make.height.mas_equalTo(headerView.mas_height);
+            make.width.mas_equalTo(50);
+        }];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ChooseAllClick:)];
+        [headerView addGestureRecognizer:tap];
+    }
+   
     return headerView;
 }
 
 
--(void)ChooseAllClick:(UIButton *)button{
-    _ifAllSelecteSwitch = YES;
-    UIButton * chooseIcon = (UIButton *)[_MyTable.tableHeaderView viewWithTag:10];
-    chooseIcon.selected = !_ifAllSelected;
-    _ifAllSelected = !_ifAllSelected;
-    if (_ifAllSelected) {
-        [_choosedArr removeAllObjects];
-        [_choosedArr addObjectsFromArray:_dataArr];
-    }
-    else{
-        [_choosedArr removeAllObjects];
-    }
-    [_MyTable reloadData];
-    _block(@"All",_choosedArr);
 
-}
 
 #pragma UITableViewDelegate - UITableViewDataSource
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
+    if (_ifhHaveHeader) {
+        UIView * view = [self CreateHeaderView_HeaderTitle:@"全选"];
+        return view;
+    }
+    return nil;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
+    if (_ifhHaveHeader) {
+        return HeaderHeight;
+    }
+    return 0;
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return CellHeight;
 }
@@ -129,7 +141,6 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     TableChooseCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     [cell UpdateCellWithState:!cell.isSelected];
-    
     if (cell.isSelected) {
         [_choosedArr addObject:cell.titleLabel.text];
     }
@@ -139,11 +150,32 @@
     
     if (_choosedArr.count<_dataArr.count) {
         _ifAllSelected = NO;
-        UIButton * chooseIcon = (UIButton *)[_MyTable.tableHeaderView viewWithTag:10];
+        UIButton * chooseIcon = (UIButton *)[headerView viewWithTag:10];
         chooseIcon.selected = _ifAllSelected;
     }
      _block(cell.titleLabel.text,_choosedArr);
 }
+
+/**
+ 全选操作
+ */
+-(void)ChooseAllClick:(UITapGestureRecognizer *)tapGes{
+    _ifAllSelecteSwitch = YES;
+    UIButton * chooseIcon = (UIButton *)[headerView viewWithTag:10];
+    [chooseIcon setSelected:!_ifAllSelected];
+    _ifAllSelected = !_ifAllSelected;
+    if (_ifAllSelected) {
+        [_choosedArr removeAllObjects];
+        [_choosedArr addObjectsFromArray:_dataArr];
+    }
+    else{
+        [_choosedArr removeAllObjects];
+    }
+    [_MyTable reloadData];
+    _block(@"All",_choosedArr);
+    
+}
+
 
 -(void)ReloadData{
     [self.MyTable reloadData];
