@@ -10,6 +10,10 @@
 #import "TableChooseCell.h"
 #define HeaderHeight 50
 #define CellHeight 50
+#define CellId @"CellId"
+@interface SingleChooseTable()
+@property(nonatomic,strong)NSDictionary * cellDic;//设置cell的identifier，防止重用
+@end
 
 @implementation SingleChooseTable
 
@@ -52,19 +56,27 @@
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = [_dataArr objectAtIndex:indexPath.row];
+    if ([self.chooseContent isEqualToString:cell.titleLabel.text]) {
+        [cell UpdateCellWithState:YES];
+    }
+    else{
+        [cell UpdateCellWithState:NO];
+    }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     if (_currentSelectIndex!=nil&&_currentSelectIndex != indexPath) {
-        TableChooseCell * cell = [tableView cellForRowAtIndexPath:_currentSelectIndex];
+        NSIndexPath *  beforIndexPath = [NSIndexPath indexPathForRow:_currentSelectIndex.row inSection:0];
+        //如果之前decell在当前屏幕，把之前选中cell的状态取消掉
+        TableChooseCell * cell = [tableView cellForRowAtIndexPath:beforIndexPath];
         [cell UpdateCellWithState:NO];
     }
     TableChooseCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     [cell UpdateCellWithState:!cell.isSelected];
+    self.chooseContent = cell.titleLabel.text;
     _currentSelectIndex = indexPath;
-
-    _block(cell.titleLabel.text,indexPath);
+    _block(self.chooseContent,indexPath);
 }
 
 -(void)ReloadData{

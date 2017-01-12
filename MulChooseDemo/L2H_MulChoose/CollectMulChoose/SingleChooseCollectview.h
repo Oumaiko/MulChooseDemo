@@ -14,8 +14,8 @@ typedef void(^ChooseBlock) (NSString *chooseContent,NSIndexPath *indexPath);
 @property(nonatomic,strong)NSMutableArray * dataArr;
 @property(nonatomic,strong)NSMutableArray * chooseedArr;
 @property(nonatomic,strong)NSIndexPath * currentSelectIndex;
+@property(nonatomic,strong)NSString * chooseContent;
 @property(nonatomic,copy)ChooseBlock block;
-
 +(instancetype)ShareCollectviewWithFrame:(CGRect)frame;
 -(void)ReloadData;
 

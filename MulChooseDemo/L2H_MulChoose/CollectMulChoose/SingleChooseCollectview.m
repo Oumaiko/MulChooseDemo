@@ -76,6 +76,12 @@ static NSString *HeaderId = @"HeaderId";
 
     cell.backgroundColor = [UIColor clearColor];
     cell.titleLab.text = [_dataArr objectAtIndex:indexPath.row];
+    if ([self.chooseContent isEqualToString:cell.titleLab.text]) {
+        [cell UpdateCellWithState:YES];
+    }
+    else{
+        [cell UpdateCellWithState:NO];
+    }
     return cell;
 }
 
@@ -87,8 +93,8 @@ static NSString *HeaderId = @"HeaderId";
     CollectviewChooseCell * cell = (CollectviewChooseCell *)[collectionView cellForItemAtIndexPath:indexPath];
     [cell UpdateCellWithState:!cell.isSelected];
     _currentSelectIndex = indexPath;
-
-    _block(cell.titleLab.text,indexPath);
+    self.chooseContent = cell.titleLab.text;
+    _block(self.chooseContent,indexPath);
 }
 
 -(void)ReloadData{

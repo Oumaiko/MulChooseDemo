@@ -26,11 +26,8 @@
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"AddArr" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
     _dataArr = [[NSMutableArray alloc]initWithCapacity:0];
     _dataArr = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9", nil];
- 
     [self.view addSubview:self.MyCollectView];
 }
-
-
 
 
 -(SingleChooseCollectview *)MyCollectView{

@@ -9,10 +9,9 @@
 #import "TableVC_SingleChoose.h"
 #import "SingleChooseTable.h"
 
-@interface TableVC_SingleChoose (){
-    SingleChooseTable * MyTable;
-    NSMutableArray * dataArr;
-}
+@interface TableVC_SingleChoose ()
+@property(nonatomic,weak)SingleChooseTable * MyTable;
+@property(nonatomic,strong)NSMutableArray * dataArr;
 
 @end
 
@@ -24,35 +23,39 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    //增加数据
-//    UIButton * btn = [[UIButton alloc]initWithFrame:CGRectMake(SCREEN_WIDTH-110, 0, 100, 50)];
-//    [btn setTitle:@"AddArr" forState:UIControlStateNormal];
-//    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//    [btn addTarget:self action:@selector(click) forControlEvents:UIControlEventTouchUpInside];
-//    [self.navigationController.navigationBar addSubview:btn];
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"AddArr" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
+    self.dataArr = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6", nil];//初始化展示数据，可删除
+    [self.view addSubview:self.MyTable];
+}
 
-    
-    
-    dataArr = [[NSMutableArray alloc]initWithCapacity:0];
-    dataArr = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6", nil];
-    MyTable = [SingleChooseTable ShareTableWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.view.frame.size.height)];
-    MyTable.dataArr = dataArr;
-    [MyTable ReloadData];
-    //选中内容
-    MyTable.block = ^(NSString *chooseContent,NSIndexPath *indexPath){
-        NSLog(@"数据：%@ ；第%ld行",chooseContent,indexPath.row);
-    };
-    [self.view addSubview:MyTable];
+-(SingleChooseTable *)MyTable{
+    if (!_MyTable) {
+        _MyTable = [SingleChooseTable ShareTableWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.view.frame.size.height)];
+        _MyTable.dataArr = self.dataArr;
+        [_MyTable ReloadData];
+        //选中内容
+        _MyTable.block = ^(NSString *chooseContent,NSIndexPath *indexPath){
+            NSLog(@"数据：%@ ；第%ld行",chooseContent,indexPath.row);
+        };
+    }
+    return _MyTable;
+}
+
+-(NSMutableArray *)dataArr{
+    if (!_dataArr) {
+       _dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+    }
+    return _dataArr;
 }
 
 -(void)click{
-    NSUInteger CurrentCount = dataArr.count;
+    NSUInteger CurrentCount = _dataArr.count;
     for (int i=1; i<=10; i++) {
-        [dataArr addObject:[NSString stringWithFormat:@"%lu",CurrentCount+i]];
+        [_dataArr addObject:[NSString stringWithFormat:@"%lu",CurrentCount+i]];
+        
     }
-    MyTable.dataArr = dataArr;
-    [MyTable ReloadData];
+    _MyTable.dataArr = _dataArr;
+    [_MyTable ReloadData];
 }
 
 - (void)didReceiveMemoryWarning {

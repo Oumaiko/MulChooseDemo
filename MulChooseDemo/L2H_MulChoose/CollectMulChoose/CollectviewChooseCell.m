@@ -7,7 +7,6 @@
 #define SelectNum_ItemWidth 77
 #define ItemFont1 17
 #define ItemFont2 16
-//加油包订购——流量包cell展示
 
 @implementation CollectviewChooseCell
 
@@ -55,28 +54,5 @@
     _isSelected = select;
 }
 
-//-(void)setData:(CommonItem *)titleItem selected:(BOOL)Selected{
-//    NSString * titleStr1 = titleItem.Package_Mb;
-//    NSString  * titleStr2 = titleItem.Package_Price;
-//    _titleLab.text = [NSString stringWithFormat:@"%@M",titleStr1];
-////    titleLab2.text = [NSString stringWithFormat:@"%@元",titleStr2];
-//    if (Selected == YES) {
-//        _titleLab.textColor = [UIColor blackColor];
-////        titleLab2.textColor = [UIColor blackColor];
-//        [_SelectIconBtn setSelected:Selected];
-//        [_SelectIconBtn setBackgroundImage:[UIImage imageNamed:@"Package_selected"] forState:UIControlStateSelected];
-//    }
-//    else{
-//        _titleLab.textColor = [UIColor lightGrayColor];
-////        titleLab2.textColor = [UIColor lightGrayColor];
-//        [_SelectIconBtn setSelected:Selected];
-//        [_SelectIconBtn setBackgroundImage:[UIImage imageNamed:@"Package_normal"] forState:UIControlStateNormal];
-//    }
-//    
-//}
-//
-//-(void)setData:(CommonItem *)titleItem index:(NSIndexPath *)indexPath{
-//    [self setData:titleItem selected:YES];
-//}
 
 @end

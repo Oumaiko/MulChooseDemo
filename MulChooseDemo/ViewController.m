@@ -44,7 +44,7 @@
     }];
 
     
-    UIButton * CollectMulChooseBtn = [self createBtnTitle:@"CollectView多选" Selector:@selector(CollectViewChooseBtn:)];
+    UIButton * CollectMulChooseBtn = [self createBtnTitle:@"CollectView单选" Selector:@selector(CollectViewSingleChooseBtn:)];
     [self.view addSubview:CollectMulChooseBtn];
     [CollectMulChooseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(TableChooseBtn.mas_left);
@@ -53,7 +53,7 @@
         make.height.mas_equalTo(50);
     }];
     
-    UIButton * CollectSingleChooseBtn = [self createBtnTitle:@"CollectView单选" Selector:@selector(CollectViewSingleChooseBtn:)];
+    UIButton * CollectSingleChooseBtn = [self createBtnTitle:@"CollectView多选" Selector:@selector(CollectViewMulChooseBtn:)];
     [self.view addSubview:CollectSingleChooseBtn];
     [CollectSingleChooseBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(TableChooseBtn.mas_left);
@@ -67,9 +67,11 @@
 -(UIButton *)createBtnTitle:(NSString *)title Selector:(SEL)selector{
     UIButton * btn = [[UIButton alloc]init];
     [btn setTitle:title forState:UIControlStateNormal];
-    [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
     btn.backgroundColor = [UIColor lightGrayColor];
+    btn.layer.cornerRadius = 5;
+    btn.layer.masksToBounds = YES;
     return  btn;
 }
 
@@ -84,15 +86,16 @@
 
 }
 
--(void)CollectViewChooseBtn:(UIButton *)btn{
-    CollectViewVC_Mulchoose * collectChoose = [[CollectViewVC_Mulchoose alloc]init];
-    [self.navigationController pushViewController:collectChoose animated:YES];
-}
-
 -(void)CollectViewSingleChooseBtn:(UIButton *)btn{
     CollectViewVC_SingleChoose * collectSingleChoose = [[CollectViewVC_SingleChoose alloc]init];
     [self.navigationController pushViewController:collectSingleChoose animated:YES];
 }
+
+-(void)CollectViewMulChooseBtn:(UIButton *)btn{
+    CollectViewVC_Mulchoose * collectChoose = [[CollectViewVC_Mulchoose alloc]init];
+    [self.navigationController pushViewController:collectChoose animated:YES];
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

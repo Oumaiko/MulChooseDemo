@@ -122,6 +122,7 @@
             _ifAllSelecteSwitch  = NO;
         }
     }
+    
     return cell;
 }
 
