@@ -25,6 +25,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    //增加数据
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"AddArr" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
     dataArr = [[NSMutableArray alloc]initWithCapacity:0];
     dataArr = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",nil];
     MyCollectView = [MulChooseCollectView ShareCollectviewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.view.frame.size.height) HeaderTitle:@"全选"];
@@ -36,18 +38,19 @@
 }
 
 
+//增加数据刷新（可根据实际情况修改）
+-(void)click{
+    NSUInteger CurrentCount = dataArr.count;
+    for (int i=1; i<=10; i++) {
+        [dataArr addObject:[NSString stringWithFormat:@"%lu",CurrentCount+i]];
+    }
+    MyCollectView.dataArr = dataArr;
+    [MyCollectView ReloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

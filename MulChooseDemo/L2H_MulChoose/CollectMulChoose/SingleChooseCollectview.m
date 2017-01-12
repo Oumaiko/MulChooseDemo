@@ -10,8 +10,14 @@
 #import "CollectviewChooseCell.h"
 #define ItemHeight 70
 #define HeaderHeight 50
-static NSString *CellId = @"CellId";
+#define CellId @"CellId"
 static NSString *HeaderId = @"HeaderId";
+
+@interface SingleChooseCollectview()
+@property(nonatomic,strong)NSDictionary * cellDic;//设置cell的identifier，防止重用
+@end
+
+
 @implementation SingleChooseCollectview
 
 
@@ -36,7 +42,7 @@ static NSString *HeaderId = @"HeaderId";
     flowLayout.minimumLineSpacing = 10;
     _MyCollectView = [[UICollectionView alloc]initWithFrame:CGRectMake(0, 0 ,SCREEN_WIDTH, self.frame.size.height) collectionViewLayout:flowLayout];
     _MyCollectView.backgroundColor = ColorRGB(0xf7f7f7);
-    [_MyCollectView registerClass:[CollectviewChooseCell class] forCellWithReuseIdentifier:CellId];
+//    [_MyCollectView registerClass:[CollectviewChooseCell class] forCellWithReuseIdentifier:CellId];
     _MyCollectView.showsVerticalScrollIndicator = NO;
     _MyCollectView.scrollEnabled = YES;
     _MyCollectView.delegate = self;
@@ -60,16 +66,16 @@ static NSString *HeaderId = @"HeaderId";
 
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath{
-    NSString *reuseIdetify = CellId;
-    CollectviewChooseCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdetify forIndexPath:indexPath];
+    NSString *identifier = [_cellDic objectForKey:[NSString stringWithFormat:@"%@", indexPath]];
+    if (identifier == nil) {
+        identifier = [NSString stringWithFormat:@"%@%@", CellId, [NSString stringWithFormat:@"%@", indexPath]];
+        [_cellDic setValue:identifier forKey:[NSString stringWithFormat:@"%@", indexPath]];
+        [_MyCollectView registerClass:[CollectviewChooseCell class]  forCellWithReuseIdentifier:identifier];
+    }
+    CollectviewChooseCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+
     cell.backgroundColor = [UIColor clearColor];
     cell.titleLab.text = [_dataArr objectAtIndex:indexPath.row];
-//    if (_ifAllSelecteSwitch) {
-//        [cell UpdateCellWithState:_ifAllSelected];
-//        if (indexPath.row == _dataArr.count-1) {
-//            _ifAllSelecteSwitch  = NO;
-//        }
-//    }
     return cell;
 }
 

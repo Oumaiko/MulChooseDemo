@@ -9,12 +9,9 @@
 #import "CollectViewVC_SingleChoose.h"
 #import "SingleChooseCollectview.h"
 
-@interface CollectViewVC_SingleChoose (){
-    SingleChooseCollectview * MyCollectView;
-    NSMutableArray * dataArr;
-
-}
-
+@interface CollectViewVC_SingleChoose ()
+@property(nonatomic,weak)SingleChooseCollectview * MyCollectView;
+@property(nonatomic,strong)NSMutableArray * dataArr;
 @end
 
 @implementation CollectViewVC_SingleChoose
@@ -25,30 +22,43 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    dataArr = [[NSMutableArray alloc]initWithCapacity:0];
-    dataArr = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9", nil];
-    MyCollectView = [SingleChooseCollectview ShareCollectviewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.view.frame.size.height)];
-    MyCollectView.dataArr = dataArr;
-    //选中内容
-    MyCollectView.block = ^(NSString *chooseContent,NSIndexPath *indexPath){
-        NSLog(@"数据：%@ ；第%ld行",chooseContent,indexPath.row);
-    };
-    [self.view addSubview:MyCollectView];
+    //增加数据
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"AddArr" style:UIBarButtonItemStylePlain target:self action:@selector(click)];
+    _dataArr = [[NSMutableArray alloc]initWithCapacity:0];
+    _dataArr = [NSMutableArray arrayWithObjects:@"1",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9", nil];
+ 
+    [self.view addSubview:self.MyCollectView];
+}
+
+
+
+
+-(SingleChooseCollectview *)MyCollectView{
+    if (!_MyCollectView) {
+        _MyCollectView = [SingleChooseCollectview ShareCollectviewWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.view.frame.size.height)];
+        _MyCollectView.dataArr = _dataArr;
+        //选中内容
+        _MyCollectView.block = ^(NSString *chooseContent,NSIndexPath *indexPath){
+            NSLog(@"数据：%@ ；第%ld行",chooseContent,indexPath.row);
+        };
+    }
+    return _MyCollectView;
+}
+
+
+//增加数据刷新（可根据实际情况修改）
+-(void)click{
+    NSUInteger CurrentCount = _dataArr.count;
+    for (int i=1; i<=10; i++) {
+        [_dataArr addObject:[NSString stringWithFormat:@"%lu",CurrentCount+i]];
+    }
+    _MyCollectView.dataArr = _dataArr;
+    [_MyCollectView ReloadData];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -50,8 +50,8 @@
     if (!cell) {
         cell = [[TableChooseCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.titleLabel.text = [_dataArr objectAtIndex:indexPath.row];
-
     return cell;
 }
 

@@ -110,6 +110,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AEBEC35C1E27299600AE3391 /* CollectionView多选、单选 */ = {
+			isa = PBXGroup;
+			children = (
+				F9EB3CCB1D3644EC0045DB59 /* CollectViewVC_Mulchoose.h */,
+				F9EB3CCC1D3644EC0045DB59 /* CollectViewVC_Mulchoose.m */,
+				AEAB00501D36870000FB23DD /* CollectViewVC_SingleChoose.h */,
+				AEAB00511D36870000FB23DD /* CollectViewVC_SingleChoose.m */,
+			);
+			name = "CollectionView多选、单选";
+			sourceTree = "<group>";
+		};
+		AEBEC35D1E2729C000AE3391 /* TableView多选、单选 */ = {
+			isa = PBXGroup;
+			children = (
+				F9DD10CD1D372856004DADCD /* TableVC_MulChoose.h */,
+				F9DD10CE1D372856004DADCD /* TableVC_MulChoose.m */,
+				AEAB004A1D367E5B00FB23DD /* TableVC_SingleChoose.h */,
+				AEAB004B1D367E5B00FB23DD /* TableVC_SingleChoose.m */,
+			);
+			name = "TableView多选、单选";
+			sourceTree = "<group>";
+		};
 		F934CC181D34DE47001F9A92 = {
 			isa = PBXGroup;
 			children = (
@@ -129,19 +151,13 @@
 		F934CC231D34DE4A001F9A92 /* MulChooseDemo */ = {
 			isa = PBXGroup;
 			children = (
+				AEBEC35D1E2729C000AE3391 /* TableView多选、单选 */,
+				AEBEC35C1E27299600AE3391 /* CollectionView多选、单选 */,
 				F9DD10D01D3732BD004DADCD /* L2H_MulChoose */,
 				F934CC271D34DE4A001F9A92 /* AppDelegate.h */,
 				F934CC281D34DE4B001F9A92 /* AppDelegate.m */,
 				F934CC2A1D34DE4B001F9A92 /* ViewController.h */,
 				F934CC2B1D34DE4B001F9A92 /* ViewController.m */,
-				F9EB3CCB1D3644EC0045DB59 /* CollectViewVC_Mulchoose.h */,
-				F9EB3CCC1D3644EC0045DB59 /* CollectViewVC_Mulchoose.m */,
-				AEAB00501D36870000FB23DD /* CollectViewVC_SingleChoose.h */,
-				AEAB00511D36870000FB23DD /* CollectViewVC_SingleChoose.m */,
-				F9DD10CD1D372856004DADCD /* TableVC_MulChoose.h */,
-				F9DD10CE1D372856004DADCD /* TableVC_MulChoose.m */,
-				AEAB004A1D367E5B00FB23DD /* TableVC_SingleChoose.h */,
-				AEAB004B1D367E5B00FB23DD /* TableVC_SingleChoose.m */,
 				F934CC2D1D34DE4B001F9A92 /* Main.storyboard */,
 				F934CC301D34DE4B001F9A92 /* Assets.xcassets */,
 				F934CC321D34DE4B001F9A92 /* LaunchScreen.storyboard */,
